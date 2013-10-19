@@ -12,6 +12,22 @@ Entity::~Entity()
 {
 }
 
+void Entity::setPosition(int xArg, int yArg)
+{
+    x = xArg;
+    y = yArg;
+}
+
+void Entity::move(int xArg, int yArg)
+{
+    x += xArg;
+    y += yArg;
+}
+
+void Entity::onTick(int millis)
+{
+}
+
 void Entity::draw()
 {
 }

@@ -1,7 +1,15 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-//#include "Jetpack.h"
+//enum EntityType
+//{
+//    Background,
+//    Player,
+//    Wall,
+//    Brick,
+//    Rocket,
+//    Ball
+//}
 
 class Entity
 {
@@ -9,10 +17,14 @@ class Entity
         Entity();
         virtual ~Entity();
 
+        virtual void setPosition(int xArg, int yArg);
+        virtual void move(int xArg, int yArg);
+
+        virtual void onTick(int millis);
         virtual void draw();
 
     protected:
-        int x, y;
+        float x, y;
         unsigned int width, height;
 
 };
