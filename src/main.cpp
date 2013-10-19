@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 
 int main(int argc, char *argv[]) {
-    sf::RenderWindow window(sf::VideoMode(800, 450), "New SFML Project");
+    sf::RenderWindow window(sf::VideoMode(800, 450), "JetPack");
+
 
     while (window.isOpen()) {
 
@@ -12,7 +13,6 @@ int main(int argc, char *argv[]) {
         }
 
         window.clear();
-
         window.display();
     }
 
