@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
             else if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Return)
-                    Game::getInstance().init(window);
+                    Game::getInstance().restart();
                 else if (event.key.code == sf::Keyboard::Escape)
                     window->close();
             }

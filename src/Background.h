@@ -12,10 +12,11 @@ class Background : public Entity
         Background();
         ~Background();
 
+        void onTick(int millis);
         void draw();
 
     private:
-        sf::RectangleShape rect;
+        sf::Sprite background;
 };
 
 #endif // BACKGROUND_H

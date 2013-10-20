@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Colliding.h"
+#include "Ball.h"
 #include "Game.h"
 
 #include <SFML/Graphics.hpp>

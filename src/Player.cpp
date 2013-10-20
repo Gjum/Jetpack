@@ -15,8 +15,12 @@ Player::Player()
     x = 50;
     y = Game::getInstance().getWindow()->getSize().y / 2;
 
+    width = 32;
+    height = 32;
+
+    rect.setOrigin(sf::Vector2f(width / 2, height / 2));
+    rect.setSize(sf::Vector2f(width, height));
     rect.setFillColor(sf::Color::Blue);
-    rect.setSize(sf::Vector2f(32, 32));
 }
 
 Player::~Player()
@@ -59,16 +63,19 @@ void Player::draw()
 
 void Player::die()
 {
-    x = 50;
-    y = Game::getInstance().getWindow()->getSize().y / 2;
+    Game::getInstance().restart();
 }
 
 void Player::onCollide(Colliding *colliding)
 {
-    // TODO act accordingly
-    if (colliding->getCollisionType() == CollisionType::BRICK)
+    CollisionType type = colliding->getCollisionType();
+    if (type == CollisionType::BRICK)
         die();
-    else
+    else if (type == CollisionType::BALL)
     {
+        // TODO apply effect of the ball
+
+        // TODO destroy the ball
+        colliding->die();
     }
 }

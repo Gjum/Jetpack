@@ -16,6 +16,7 @@ class Brick : public Colliding
 
         void onTick(int millis);
         void draw();
+//        void onCollide(Colliding *colliding);
 
     private:
         float xSpeed, ySpeed;

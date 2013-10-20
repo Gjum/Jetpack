@@ -7,6 +7,7 @@ enum CollisionType
 {
     BRICK,
     PLAYER,
+    BALL,
     NONE
 };
 
@@ -18,7 +19,7 @@ class Colliding : public Entity
 
         virtual CollisionType getCollisionType();
 
-        virtual void onTick(int millis); // has to be called by ancestors: Colliding::onTick(millis);
+        virtual void onTick(int millis);
         virtual void onCollide(Colliding *colliding);
 
     protected:

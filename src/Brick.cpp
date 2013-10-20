@@ -9,8 +9,12 @@ Brick::Brick()
     x = 500;
     y = Game::getInstance().getWindow()->getSize().y / 2;
 
+    width = 64;
+    height = 64;
+
+    rect.setOrigin(sf::Vector2f(width / 2, height / 2));
+    rect.setSize(sf::Vector2f(width, height));
     rect.setFillColor(sf::Color::Red);
-    rect.setSize(sf::Vector2f(64, 64));
 }
 
 Brick::~Brick()
@@ -26,6 +30,9 @@ void Brick::onTick(int millis)
 {
     x += xSpeed * millis;
     y += ySpeed * millis;
+
+    // TODO die if out of sight
+    if (x < -(float) width) x = 500;
 }
 
 void Brick::draw()
@@ -34,3 +41,9 @@ void Brick::draw()
         sf::Vector2f(x, Game::getInstance().getWindow()->getSize().y - y));
     Game::getInstance().getWindow()->draw(rect);
 }
+
+//void Brick::onCollide(Colliding *colliding)
+//{
+//    if (colliding->getCollisionType() == CollisionType::PLAYER)
+//        ((Player *) colliding)->die();
+//}
