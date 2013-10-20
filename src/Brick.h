@@ -12,6 +12,8 @@ class Brick : public Colliding
         Brick();
         ~Brick();
 
+        CollisionType getCollisionType();
+
         void onTick(int millis);
         void draw();
 

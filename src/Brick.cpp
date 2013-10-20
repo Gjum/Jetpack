@@ -17,6 +17,11 @@ Brick::~Brick()
 {
 }
 
+CollisionType Brick::getCollisionType()
+{
+    return CollisionType::BRICK;
+}
+
 void Brick::onTick(int millis)
 {
     x += xSpeed * millis;

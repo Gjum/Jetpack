@@ -9,7 +9,7 @@ Player::Player()
     maxYSpeed = 0.5;
     // pixels per second per second
     xVelocity = 0.002;
-    yVelocity = 0.002;
+    yVelocity = 0.004;
     gravity   = 0.001;
 
     x = 50;
@@ -21,6 +21,11 @@ Player::Player()
 
 Player::~Player()
 {
+}
+
+CollisionType Player::getCollisionType()
+{
+    return CollisionType::PLAYER;
 }
 
 void Player::onTick(int millis)
@@ -41,10 +46,28 @@ void Player::onTick(int millis)
 
     x += xSpeed * millis;
     y += ySpeed * millis;
+
+    Colliding::onTick(millis);
 }
 
 void Player::draw()
 {
     rect.setPosition(sf::Vector2f(x, Game::getInstance().getWindow()->getSize().y - y));
     Game::getInstance().getWindow()->draw(rect);
+}
+
+void Player::die()
+{
+    x = 50;
+    y = Game::getInstance().getWindow()->getSize().y / 2;
+}
+
+void Player::onCollide(Colliding *colliding)
+{
+    // TODO act accordingly
+    if (colliding->getCollisionType() == CollisionType::BRICK)
+        die();
+    else
+    {
+    }
 }

@@ -12,8 +12,13 @@ class Player : public Colliding
         Player();
         ~Player();
 
+        CollisionType getCollisionType();
+
         void onTick(int millis);
         void draw();
+        void onCollide(Colliding *colliding);
+
+        void die();
 
     private:
         float xSpeed, ySpeed,
