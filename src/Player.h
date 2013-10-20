@@ -22,8 +22,8 @@ class Player : public Colliding
 
     private:
         float xSpeed, ySpeed,
-            xVelocity, yVelocity, gravity,
-            maxXSpeed, maxYSpeed;
+              xVelocity, yVelocity, gravity,
+              maxXSpeed, maxYSpeed;
         sf::RectangleShape rect;
 };
 

@@ -30,6 +30,7 @@ void Brick::onTick(int millis)
 
 void Brick::draw()
 {
-    rect.setPosition(sf::Vector2f(x, Game::getInstance().getWindow()->getSize().y - y));
+    rect.setPosition(
+        sf::Vector2f(x, Game::getInstance().getWindow()->getSize().y - y));
     Game::getInstance().getWindow()->draw(rect);
 }

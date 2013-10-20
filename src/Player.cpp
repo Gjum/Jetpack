@@ -9,8 +9,8 @@ Player::Player()
     maxYSpeed = 0.5;
     // pixels per second per second
     xVelocity = 0.002;
-    yVelocity = 0.004;
-    gravity   = 0.001;
+    yVelocity = 0.009;
+    gravity   = 0.004;
 
     x = 50;
     y = Game::getInstance().getWindow()->getSize().y / 2;
@@ -41,8 +41,9 @@ void Player::onTick(int millis)
 //    if (ySpeed < -maxYSpeed) ySpeed = -maxYSpeed;
 
     // friction
-    xSpeed -= 0.3 * xSpeed * xSpeed * (xSpeed > 0 ? 1 : -1);
-    ySpeed -= 0.05 * ySpeed * ySpeed * (ySpeed > 0 ? 1 : -1);
+    const float friction = 0.3;
+    xSpeed -= friction * xSpeed * xSpeed * (xSpeed > 0 ? 1 : -1);
+    ySpeed -= friction * ySpeed * ySpeed * (ySpeed > 0 ? 1 : -1);
 
     x += xSpeed * millis;
     y += ySpeed * millis;

@@ -17,8 +17,12 @@ int main(int argc, char *argv[])
             if (event.type == sf::Event::Closed)
                 window->close();
             else if (event.type == sf::Event::KeyPressed)
+            {
                 if (event.key.code == sf::Keyboard::Return)
                     Game::getInstance().init(window);
+                else if (event.key.code == sf::Keyboard::Escape)
+                    window->close();
+            }
         }
 
         Game::getInstance().onTick(timer.restart().asMilliseconds());
