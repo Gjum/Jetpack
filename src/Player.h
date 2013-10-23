@@ -18,7 +18,7 @@ class Player : public Colliding
         void onTick(int millis);
         void draw();
         void onCollide(Colliding *colliding);
-
+        void CollisionBorder ();
         void die();
 
     private:

@@ -4,6 +4,8 @@
 #include "Colliding.h"
 #include "Game.h"
 
+#include <ctime> // FOR RANDOMIZER
+#include <cstdlib> //FOR RANDOMIZER
 #include <SFML/Graphics.hpp>
 
 class Brick : public Colliding
@@ -17,6 +19,7 @@ class Brick : public Colliding
         void onTick(int millis);
         void draw();
 //        void onCollide(Colliding *colliding);
+
 
     private:
         float xSpeed, ySpeed;

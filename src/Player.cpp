@@ -1,14 +1,11 @@
 #include "Player.h"
-#include <iostream>
 
 Player::Player()
 {
     // pixels per second
-    xSpeed = 0.0;
     ySpeed = 0.0;
     // pixels per second per second
-    xVelocity = 0.002;
-    yVelocity = 0.003; // 0.009
+    yVelocity = 0.004; // 0.009
     gravity   = 0.001; // 0.004
 
     x = 50;
@@ -35,21 +32,18 @@ void Player::onTick(int millis)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) xSpeed += xVelocity * millis;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) xSpeed -= xVelocity * millis;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) ySpeed += yVelocity * millis; // ySpeed += yVelocity * millis
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) ySpeed += yVelocity * millis;
     ySpeed -= gravity * millis;
 
 
     // friction
     const float friction = 0.1; // 0.3
-    xSpeed -= friction * xSpeed * xSpeed * (xSpeed > 0 ? 1 : -1);
     ySpeed -= friction * ySpeed * ySpeed * (ySpeed > 0 ? 1 : -1);
-
-    x += xSpeed * millis;
     y += ySpeed * millis;
 
     Colliding::onTick(millis);
-    //std::cout << (ySpeed <= 0 ? "-" : "") << abs(ySpeed*10) << std::endl;
 
+    Player::CollisionBorder ();
 }
 
 void Player::draw()
@@ -75,4 +69,13 @@ void Player::onCollide(Colliding *colliding)
         // TODO destroy the ball
         colliding->die();
     }
+}
+
+void Player::CollisionBorder () //TODO STILL WRONG :( IF i put - height / 2 no error but nothing starts
+{
+    if (y < 0 || y > Game::getInstance().getWindow()->getSize().y)
+    {
+        die();
+    }
+
 }

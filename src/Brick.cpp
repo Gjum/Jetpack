@@ -6,15 +6,20 @@ Brick::Brick()
     xSpeed = -0.5;
     ySpeed = 0.0;
 
-    x = 500;
-    y = Game::getInstance().getWindow()->getSize().y / 2;
-
     width = 64;
     height = 64;
+
+    x = Game::getInstance().getWindow()->getSize().x + width;
+
+    srand (time(0));
+    y =  (rand () % Game::getInstance().getWindow()->getSize().y);                                                          //Game::getInstance().getWindow()->getSize().y / 2;
+
 
     rect.setOrigin(sf::Vector2f(width / 2, height / 2));
     rect.setSize(sf::Vector2f(width, height));
     rect.setFillColor(sf::Color::Red);
+
+
 }
 
 Brick::~Brick()
