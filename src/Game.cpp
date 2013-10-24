@@ -1,8 +1,6 @@
 #include "Game.h"
 
-//#include <iostream>
-
-#define FOR_EACH_VEC(element, vector) for(auto element = vector.begin(); element != vector.end(); element++)
+#include <iostream>
 
 Game::Game()
 {
@@ -12,11 +10,12 @@ Game::Game()
 
     textures.insert(std::pair<std::string, sf::Texture *>("background", new sf::Texture));
     textures.at("background")->setRepeated(true);
-    if (!textures.at("background")->loadFromFile("background.png"))
+    if (!textures.at("background")->loadFromFile("img/background.png"))
     {
-        // TODO error: texture not loaded
+        std::cerr << "Error while loading texture 'background'";
     }
 
+    entities.push_back(new Brick); // TODO
 }
 
 Game::~Game()
@@ -29,11 +28,6 @@ Game &Game::getInstance()
     return instance;
 }
 
-sf::RenderWindow *Game::getWindow()
-{
-    return window;
-}
-
 void Game::init(sf::RenderWindow *windowArg)
 {
     window = windowArg;
@@ -42,82 +36,76 @@ void Game::init(sf::RenderWindow *windowArg)
 
 void Game::restart()
 {
-    FOR_EACH_VEC(entity, entities)
+    for (unsigned int a = 0; a < entities.size() - 1; a++)
     {
-        if ((*entity) != NULL) delete(*entity);
+        Entity *entity = getEntity(a);
+        if (entity != NULL) delete(entity);
     }
-    entities.erase(entities.begin(), entities.end());
+    entities.clear();
 
     entities.push_back(background = new Background);
-    entities.push_back(new Brick);
     entities.push_back(player = new Player);
+    entities.push_back(new Brick);
+
+    timeSinceLastBrick = 0;
 }
 
 void Game::onTick(int millis)
 {
-    FOR_EACH_VEC(entity, entities)
+    // create new brick
+    timeSinceLastBrick += millis;
+    if (timeSinceLastBrick > 500)
     {
-        (*entity)->onTick(millis);
+        timeSinceLastBrick -= 500;
+        // TODO debug
+//        entities.push_back((Entity *) new Brick);
+//        entities.insert(entities.begin(), (Entity *) new Brick);
     }
 
-    for (unsigned int a = 0; a < getEntityAmount() - 1; a++)
+    for (unsigned int a = 0; a < entities.size() - 1; a++)
     {
-        for (unsigned int b = a + 1; b < getEntityAmount(); b++)
-        {
-            Colliding *entA = dynamic_cast<Colliding *>(getEntity(a));
-            Colliding *entB = dynamic_cast<Colliding *>(getEntity(b));
+        getEntity(a)->onTick(millis);
+    }
+//    deleteDeadEntities();
 
-            // are we dealing with two Colliding objects?
-            if (entA == NULL || entB == NULL) continue;
+    // test for collisions
+    for (unsigned int a = 0; a < entities.size() - 1; a++)
+    {
+        for (unsigned int b = a + 1; b < entities.size(); b++)
+        {
+            Entity *entA = getEntity(a);
+            Entity *entB = getEntity(b);
+
+            std::cout << "Colliding " << entA << " + " << entB << "\n"; // TODO debug
+
+            // Is one of them already dead?
+            if (entA->isDead() || entB->isDead()) continue;
 
             if (intersects(entA, entB))
             {
-                entA->onCollide(entB);
                 entB->onCollide(entA);
+                entA->onCollide(entB);
             }
         }
     }
-
-    deleteDeadEntities();
-}
-
-void Game::draw()
-{
-    if (window == NULL)
-    {
-        // TODO error: window not initialized
-        return;
-    }
-
-    background->draw();
-    FOR_EACH_VEC(entity, entities)
-    {
-        if ((*entity) == background) continue;
-        if ((*entity) == player) continue;
-
-        (*entity)->draw();
-    }
-    player->draw();
-}
-
-sf::Texture *Game::getTexture(std::string name)
-{
-    return textures.at(name);
-}
-
-unsigned int Game::getEntityAmount()
-{
-    return entities.size();
-}
-
-Entity *Game::getEntity(unsigned int id)
-{
-    return entities.at(id);
+//    deleteDeadEntities();
 }
 
 void Game::deleteDeadEntities()
 {
-    // TODO deleteDeadEntities
+    for (unsigned int a = 0; a < entities.size() - 1; a++)
+    {
+        Entity *entity = getEntity(a);
+        if (entity->isDead())
+        {
+            std::cout << "Erasing " << entity << "\n";
+
+            if (entity != NULL) delete entity;
+            else std::cerr << "Error while deleting NULL entity pointer\n";
+
+            entities.erase(entities.begin() + a);
+        }
+    }
 }
 
 bool Game::intersects(Entity *a, Entity *b)
@@ -125,6 +113,42 @@ bool Game::intersects(Entity *a, Entity *b)
     sf::IntRect rectA = a->getRect();
     sf::IntRect rectB = b->getRect();
     return rectA.intersects(rectB);
+}
+
+void Game::draw()
+{
+    if (window == NULL)
+    {
+        std::cerr << "Error while drawing to uninitialized window pointer";
+        return;
+    }
+
+    background->draw();
+
+    for (unsigned int a = 0; a < entities.size() - 1; a++)
+    {
+        Entity *entity = getEntity(a);
+        if (entity == background) continue;
+        if (entity == player) continue;
+
+        entity->draw();
+    }
+    player->draw();
+}
+
+sf::RenderWindow *Game::getWindow()
+{
+    return window;
+}
+
+sf::Texture *Game::getTexture(std::string name)
+{
+    return textures.at(name);
+}
+
+Entity *Game::getEntity(unsigned int id)
+{
+    return entities.at(id);
 }
 
 #undef FOR_EACH_VEC

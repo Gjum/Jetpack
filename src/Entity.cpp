@@ -13,6 +13,11 @@ Entity::~Entity()
 {
 }
 
+CollisionType Entity::getCollisionType()
+{
+    return CollisionType::NONE;
+}
+
 void Entity::setPosition(int xArg, int yArg)
 {
     x = xArg;
@@ -26,6 +31,10 @@ void Entity::move(int xArg, int yArg)
 }
 
 void Entity::onTick(int millis)
+{
+}
+
+void Entity::onCollide(Entity *entity)
 {
 }
 

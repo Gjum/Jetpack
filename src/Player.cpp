@@ -32,11 +32,12 @@ CollisionType Player::getCollisionType()
     return CollisionType::PLAYER;
 }
 
+// millis: milliseconds since last onTick()
 void Player::onTick(int millis)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) xSpeed += xVelocity * millis;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) xSpeed -= xVelocity * millis;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) ySpeed += yVelocity * millis;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))  xSpeed -= xVelocity * millis;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))    ySpeed += yVelocity * millis;
     ySpeed -= gravity * millis;
 
 //    if (xSpeed > maxXSpeed)  xSpeed =  maxXSpeed;
@@ -52,7 +53,7 @@ void Player::onTick(int millis)
     x += xSpeed * millis;
     y += ySpeed * millis;
 
-    Colliding::onTick(millis);
+    Entity::onTick(millis);
 }
 
 void Player::draw()
@@ -66,16 +67,16 @@ void Player::die()
     Game::getInstance().restart();
 }
 
-void Player::onCollide(Colliding *colliding)
+void Player::onCollide(Entity *entity)
 {
-    CollisionType type = colliding->getCollisionType();
+    CollisionType type = entity->getCollisionType();
     if (type == CollisionType::BRICK)
-        die();
+        this->die();
     else if (type == CollisionType::BALL)
     {
         // TODO apply effect of the ball
 
         // TODO destroy the ball
-        colliding->die();
+        entity->die();
     }
 }

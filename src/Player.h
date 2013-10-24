@@ -1,13 +1,13 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Colliding.h"
+#include "Entity.h"
 #include "Ball.h"
 #include "Game.h"
 
 #include <SFML/Graphics.hpp>
 
-class Player : public Colliding
+class Player : public Entity
 {
     public:
         Player();
@@ -17,7 +17,7 @@ class Player : public Colliding
 
         void onTick(int millis);
         void draw();
-        void onCollide(Colliding *colliding);
+        void onCollide(Entity *entity);
 
         void die();
 

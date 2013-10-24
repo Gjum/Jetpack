@@ -3,16 +3,27 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
+enum CollisionType
+{
+    BRICK,
+    PLAYER,
+    BALL,
+    NONE
+};
+
 class Entity
 {
     public:
         Entity();
         virtual ~Entity();
 
+        virtual CollisionType getCollisionType();
+
         virtual void setPosition(int xArg, int yArg);
         virtual void move(int xArg, int yArg);
 
         virtual void onTick(int millis);
+        virtual void onCollide(Entity *entity);
         virtual void draw();
         virtual void die();
         bool isDead();

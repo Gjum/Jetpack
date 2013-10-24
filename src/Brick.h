@@ -1,12 +1,12 @@
 #ifndef BRICK_H
 #define BRICK_H
 
-#include "Colliding.h"
+#include "Entity.h"
 #include "Game.h"
 
 #include <SFML/Graphics.hpp>
 
-class Brick : public Colliding
+class Brick : public Entity
 {
     public:
         Brick();
@@ -16,7 +16,6 @@ class Brick : public Colliding
 
         void onTick(int millis);
         void draw();
-//        void onCollide(Colliding *colliding);
 
     private:
         float xSpeed, ySpeed;

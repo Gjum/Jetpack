@@ -1,13 +1,15 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include "Colliding.h"
+#include "Entity.h"
 
-class Ball : public Colliding
+class Ball : public Entity
 {
     public:
         Ball();
         virtual ~Ball();
+
+        // TODO finish Ball class
 
     protected:
 };

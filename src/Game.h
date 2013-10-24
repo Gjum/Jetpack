@@ -13,17 +13,15 @@ class Game
 {
     public:
         static Game &getInstance();
-        sf::RenderWindow *getWindow();
 
         void init(sf::RenderWindow *windowArg);
         void restart();
         void onTick(int millis);
         void draw();
 
+        sf::RenderWindow *getWindow();
         sf::Texture *getTexture(std::string name);
-        unsigned int getEntityAmount();
         Entity *getEntity(unsigned int id);
-        void deleteDeadEntities();
 
     private:
         Game();
@@ -38,7 +36,10 @@ class Game
         Player *player;
         std::vector<Entity *> entities;
 
+        unsigned int timeSinceLastBrick;
+
         bool intersects(Entity *a, Entity *b);
+        void deleteDeadEntities();
 };
 
 #include "Background.h"
