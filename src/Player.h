@@ -22,8 +22,7 @@ class Player : public Colliding
         void die();
 
     private:
-        float xSpeed, ySpeed,
-              xVelocity, yVelocity, gravity;
+        float ySpeed, yVelocity;
         sf::RectangleShape rect;
 };
 
